@@ -1,16 +1,16 @@
-# Lessons
+# 教訓
 
-- For website image paths, always use the correct relative path (e.g., 'images/filename.png') and ensure the images directory exists
-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
-- When using Jest, a test suite can fail even if all individual tests pass, typically due to issues in suite-level setup code or lifecycle hooks
+- ウェブサイトの画像パスには、常に正しい相対パスを使用し（例：'images/filename.png'）、画像ディレクトリが存在することを確認してください
+- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
+- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
+- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
+- Jestを使用する場合、すべての個別テストが合格しても、テストスイートが失敗することがあります。これは通常、スイートレベルのセットアップコードまたはライフサイクルフックの問題が原因です
 
-## Windsurf learned
+## Windsurfが学んだ教訓
 
-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
-- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities 
+- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
+- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
+- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
+- OpenAIのGPT-4ビジョン機能を使用する場合は、モデル名として'gpt-4o'を使用してください
 
-# Scratchpad
+# スクラッチパッド

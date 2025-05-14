@@ -1,105 +1,105 @@
-# Step-by-Step Tutorial for Cursor with devin.cursorrules
+# Windsurfとdevin.windsurferulesのステップバイステップチュートリアル
 
-This tutorial is designed for users who have never used Cursor before. We'll start from the beginning, covering installation, configuration, and how to use @grapeot's [`devin.cursorrules`](https://github.com/grapeot/devin.cursorrules) repository to transform Cursor into a self-evolving AI agent with tool-calling capabilities. While this document is designed for beginners, experienced Cursor users may also find it helpful. Feel free to skip sections you're already familiar with.
+このチュートリアルは、Windsurfを初めて使用するユーザー向けに設計されています。インストール、設定から、@grapeotの[`devin.windsurferules`](https://github.com/grapeot/devin.cursorrules)リポジトリを使用してWindsurfをツール呼び出し機能を備えた自己進化型AIエージェントに変換する方法まで、最初から説明します。このドキュメントは初心者向けに設計されていますが、経験豊富なWindsurfユーザーにも役立つ情報が含まれています。すでに知っているセクションはスキップしてください。
 
-## Installation and Initial Configuration
+## インストールと初期設定
 
-Downloading and installing Cursor is similar to any other app. You can find the download link at the official website: [https://www.cursor.com/](https://www.cursor.com/). After launching Cursor for the first time, it will prompt you to log in. For first-time users, you'll need to click the register button to create an account on the official website.
+Windsurfのダウンロードとインストールは、他のアプリと同様です。公式ウェブサイト[https://www.windsurf.sh/](https://www.windsurf.sh/)からダウンロードリンクを見つけることができます。Windsurfを初めて起動すると、ログインを求められます。初めてのユーザーは、公式ウェブサイトで登録ボタンをクリックしてアカウントを作成する必要があります。
 
-To fully utilize Cursor, you'll need a Cursor Pro Plan subscription which costs $20 per month. However, Cursor provides a free trial period for new users. You can decide whether to subscribe after trying it out.
+Windsurfを最大限に活用するには、月額$15のWindsurf Proプランのサブスクリプションが必要です。ただし、Windsurfは新規ユーザーに無料トライアル期間を提供しています。試してみた後、サブスクリプションするかどうかを決めることができます。
 
-![Cursor Pro Plan](images/image2.png)
+![Windsurf Proプラン](images/image2.png)
 
-## Basic Interface
+## 基本インターフェース
 
-Cursor is a code editor where we typically open a folder to work in. For example, you can create a new folder like `~/Downloads/tmp` on your computer and use the "Open Folders" option in Cursor to open this location.
+Windsurfはコードエディタで、通常は作業するフォルダを開きます。例えば、コンピュータに`~/Downloads/tmp`のような新しいフォルダを作成し、Windsurfの「フォルダを開く」オプションを使用してこの場所を開くことができます。
 
-The interface consists of three main parts:
-- Left sidebar: Shows the contents of your current folder (empty if you just created it)
-- Middle area: Code editing space (though we'll primarily use Cursor's Agentic AI features)
-- Right sidebar: Chat area where we communicate with Cursor, give instructions, and receive responses. If you don't see this area, press Command+I to show it.
+インターフェースは主に3つの部分で構成されています：
+- 左サイドバー：現在のフォルダの内容を表示します（新しく作成した場合は空）
+- 中央エリア：コード編集スペース（ただし、主にWindsurfのエージェント型AI機能を使用します）
+- 右サイドバー：Windsurfとコミュニケーションし、指示を出し、応答を受け取るチャットエリア。このエリアが表示されない場合は、Command+Iを押して表示します。
 
-![Basic Interface](images/image10.png)
+![基本インターフェース](images/image10.png)
 
-Since we'll mainly use Cursor's Agentic AI features, I recommend making the chat sidebar wider.
+Windsurfのエージェント型AI機能を主に使用するため、チャットサイドバーを広くすることをお勧めします。
 
-Like VS Code, many of Cursor's features are accessed through commands in the command palette. You can press F1 to bring up the command palette. For example, if you can't remember how to bring up the chat panel, you can simply type "chat" in the command palette. It will show you options, and you can click the appropriate one to bring up the chat again. Commands also show keyboard shortcuts on the right, which you can memorize for faster access in the future.
+VS Codeと同様に、Windsurfの多くの機能はコマンドパレットを通じてアクセスします。F1を押すとコマンドパレットが表示されます。例えば、チャットパネルの表示方法を思い出せない場合は、コマンドパレットで「チャット」と入力するだけです。オプションが表示され、適切なものをクリックしてチャットを再度表示できます。コマンドには右側にキーボードショートカットも表示されるので、将来的に素早くアクセスするために覚えておくと便利です。
 
-![Command Palette](images/image4.png)
+![コマンドパレット](images/image4.png)
 
-![Command Options](images/image9.png)
+![コマンドオプション](images/image9.png)
 
-## Important Initial Settings
+## 重要な初期設定
 
-Cursor now provides a unified AI experience with Agent mode as the default. This means you no longer need to worry about switching between different modes like Chat, Composer, or Agent - there's just one smart interface that adapts to your needs.
+Windsurfは現在、デフォルトでエージェントモードを使用した統合AIエクスペリエンスを提供しています。これにより、チャット、コンポーザー、エージェントなどの異なるモード間を切り替える必要がなくなり、ニーズに適応する1つのスマートインターフェースだけを使用できます。
 
-In the bottom left corner of the chat panel, you can specify which AI model you want to use. Currently, Cursor supports several AI models including Claude, GPT-4o, and o3-mini. We generally recommend using Claude as it performs best in various scenarios, but feel free to experiment with other models.
+チャットパネルの左下隅で、使用したいAIモデルを指定できます。現在、WindsurfはClaude、GPT-4o、o3-miniなど、いくつかのAIモデルをサポートしています。一般的には、さまざまなシナリオで最も優れたパフォーマンスを発揮するClaudeを使用することをお勧めしますが、他のモデルも自由に試してみてください。
 
-Your configuration should look like this (note Claude in the bottom left):
+設定は次のようになります（左下にClaudeが表示されていることに注意）：
 
-![Configuration Settings](images/image8.png)
+![設定](images/image8.png)
 
-## YOLO Mode Configuration
+## YOLOモード設定
 
-Before we start our first example, we need to make one more configuration change. In the top right corner of the Cursor interface, there's a gear icon. Clicking it will take you to Cursor's settings. On the left side of the settings screen, there are four tabs: General, Models, Features, and Beta. Click the third tab (Features) and scroll down to "Enable Yolo Mode".
+最初の例を始める前に、もう1つ設定変更を行う必要があります。Windsurfインターフェースの右上隅には歯車アイコンがあります。これをクリックするとWindsurfの設定に移動します。設定画面の左側には、一般、モデル、機能、ベータの4つのタブがあります。3番目のタブ（機能）をクリックし、「YOLOモードを有効にする」までスクロールします。
 
-![YOLO Mode Settings](images/image5.png)
+![YOLOモード設定](images/image5.png)
 
-Here, you can configure based on your preferences:
-- If you want to review and manually confirm every command before AI executes it, leave this unchecked
-- If you trust the AI not to harm your system and want it to execute commands automatically, you can check this option
+ここでは、好みに応じて設定できます：
+- AIが実行する前にすべてのコマンドを確認して手動で確認したい場合は、チェックを外したままにします
+- AIがシステムに害を与えないと信頼し、コマンドを自動的に実行させたい場合は、このオプションをチェックできます
 
-Below this, the Yolo Prompt allows you to further customize when AI can automatically execute commands. For example, you might write something like: "Ask for confirmation when the command involves file deletion, e.g. rm, rmdir, rsync --delete, find -delete"
+この下にあるYOLOプロンプトでは、AIがコマンドを自動的に実行するタイミングをさらにカスタマイズできます。例えば、「ファイル削除を含むコマンド（rm、rmdir、rsync --delete、find -deleteなど）の場合は確認を求める」などと書くことができます。
 
-## First Example: Stock Price Visualization
+## 最初の例：株価の可視化
 
-Now that we have configured Cursor properly, let's try our first example to see Cursor's AI agent capabilities in action. In the Composer panel, we can type a simple request like "plot the stock price of Google and Amazon in 2024 and show them in one figure".
+Windsurfを適切に設定したので、最初の例を試してWindsurfのAIエージェント機能を実際に見てみましょう。コンポーザーパネルで、「2024年のGoogleとAmazonの株価をプロットして1つの図に表示する」のような簡単なリクエストを入力できます。
 
-At this point, Cursor will use its Agent mode to analyze the task, understand the requirements, and decide to use Python to complete this task.
+この時点で、Windsurfはエージェントモードを使用してタスクを分析し、要件を理解し、このタスクを完了するためにPythonを使用することを決定します。
 
-![First Example Request](images/image1.png)
+![最初の例のリクエスト](images/image1.png)
 
-After Cursor automatically handles all the code writing, environment setup, and script execution, you'll see an image file generated in your current folder. When you click on this image file in the left sidebar, you'll see the stock price curves you requested.
+Windsurfがコードの作成、環境のセットアップ、スクリプトの実行をすべて自動的に処理した後、現在のフォルダに画像ファイルが生成されます。左サイドバーでこの画像ファイルをクリックすると、リクエストした株価曲線が表示されます。
 
-![Stock Price Plot](images/image3.png)
+![株価プロット](images/image3.png)
 
-This simple example demonstrates how Cursor's AI agent can understand natural language requests, write appropriate code, handle dependencies, and execute the code to produce the desired output, all without requiring you to write any code manually.
+この簡単な例は、WindsurfのAIエージェントが自然言語リクエストを理解し、適切なコードを作成し、依存関係を処理し、コードを実行して望ましい出力を生成する方法を示しています。これらすべてを手動でコードを書くことなく行います。
 
-## Setting Up devin.cursorrules
+## devin.windsurferulesのセットアップ
 
-Up to this point, we've been using Cursor's built-in features. While this AI agent is already powerful, it has several significant limitations: it can't self-evolve, can't remember learned experiences/lessons, and can't call some common external tools. To add these capabilities to Cursor, we can use @grapeot's repository: [https://github.com/grapeot/devin.cursorrules](https://github.com/grapeot/devin.cursorrules).
+ここまでは、Windsurfの組み込み機能を使用してきました。このAIエージェントはすでに強力ですが、自己進化できない、学習した経験/教訓を記憶できない、一般的な外部ツールを呼び出せないなど、いくつかの重要な制限があります。これらの機能をWindsurfに追加するために、@grapeotのリポジトリを使用できます：[https://github.com/grapeot/devin.cursorrules](https://github.com/grapeot/devin.cursorrules)
 
-Here are the steps to configure and use this repo:
+このリポジトリを設定して使用する手順は次のとおりです：
 
-1. If you haven't installed Python yet, go to [https://www.python.org/downloads/](https://www.python.org/downloads/) or use your preferred package manager to install and configure Python.
+1. まだPythonをインストールしていない場合は、[https://www.python.org/downloads/](https://www.python.org/downloads/)にアクセスするか、好みのパッケージマネージャーを使用してPythonをインストールおよび設定します。
 
-2. Install the Cookiecutter dependency to easily initialize our Cursor project. In your system's command line (or Cursor's command window), run:
+2. Cookiecutter依存関係をインストールして、Windsurfプロジェクトを簡単に初期化します。システムのコマンドライン（またはWindsurfのコマンドウィンドウ）で次のコマンドを実行します：
 ```bash
 pip3 install cookiecutter
 ```
 
-3. Go to where you want to place this Cursor project and execute this command:
+3. このWindsurfプロジェクトを配置したい場所に移動し、次のコマンドを実行します：
 ```bash
 cookiecutter gh:grapeot/devin.cursorrules --checkout template
 ```
 
-If you get a "command not found: cookiecutter" error, try this command instead:
+「command not found: cookiecutter」エラーが発生した場合は、代わりに次のコマンドを試してください：
 ```bash
 python3 -m cookiecutter gh:grapeot/devin.cursorrules --checkout template
 ```
 
-It will launch a configuration wizard. Here is an example of the output:
+設定ウィザードが起動します。出力例は次のとおりです：
 
 ```
 ➜  Downloads python3 -m cookiecutter gh:grapeot/devin.cursorrules --checkout template                
 /Users/grapeot/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(
 You've downloaded /Users/grapeot/.cookiecutters/devin.cursorrules before. Is it okay to delete and re-download it? [y/n] (y):
-  [1/3] project_name (my-project): my-cursor-project
+  [1/3] project_name (my-project): my-windsurf-project
   [2/3] Select project_type
         1 - cursor
         2 - windsurf
-        Choose from [1/2] (1):
+        Choose from [1/2] (1): 2
   [3/3] Select llm_provider [Optional. Press Enter to use None]
         1 - None
         2 - OpenAI
@@ -112,26 +112,26 @@ Creating virtual environment...
 Installing dependencies...
 ```
 
-The configuration has three steps:
+設定には3つのステップがあります：
 
-1. Enter the name of your new project. Whatever name you enter, it will create a new subfolder with that name in the current directory and perform the configuration there.
+1. 新しいプロジェクトの名前を入力します。入力した名前に関係なく、現在のディレクトリに新しいサブフォルダが作成され、そこで設定が実行されます。
 
-2. Choose your project type. Currently, we support Cursor and Windsurf editors. Since we're using Cursor, just press Enter to select the default value (1).
+2. プロジェクトタイプを選択します。現在、CursorとWindsurfエディタをサポートしています。Windsurfを使用しているので、「2」を選択します。
 
-3. Select an LLM Provider. This is an entirely optional configuration. When first starting, you can just press Enter to select None. It's only needed for some advanced features. We can start with None and come back to change it later when we're more familiar and need to use some advanced features.
+3. LLMプロバイダーを選択します。これは完全にオプションの設定です。最初に始める場合は、Enterキーを押して「None」を選択するだけです。一部の高度な機能にのみ必要です。最初は「None」で始め、より慣れてきて一部の高度な機能を使用する必要がある場合に後で変更することができます。
 
-The script will then automatically create the folder and configure the Python environment.
+スクリプトは自動的にフォルダを作成し、Python環境を設定します。
 
-Next, you can use `cursor my-cursor-project` in the command line to open your newly created project, and you're ready to go.
+次に、コマンドラインで`windsurf my-windsurf-project`を使用して、新しく作成したプロジェクトを開くことができます。これで準備完了です。
 
-## Using the Enhanced Tools
+## 拡張ツールの使用
 
-Using this enhanced Cursor project is similar to using a regular Cursor project, but now we have access to additional tools to better complete our tasks. For example, we can say "search recent news on OpenAI" in the prompt.
+この拡張Windsurfプロジェクトの使用は、通常のWindsurfプロジェクトの使用と似ていますが、タスクをより適切に完了するための追加ツールにアクセスできるようになりました。例えば、プロンプトで「OpenAIに関する最近のニュースを検索する」と言うことができます。
 
-![Enhanced Tools Example](images/image6.png)
+![拡張ツールの例](images/image6.png)
 
-In this newly configured workspace, you'll notice Cursor has gained some additional capabilities. For instance, it will first edit our `.cursorrules` file for planning, then call our system search tools, and finally browse more web pages to get the latest information. 
+この新しく設定されたワークスペースでは、Windsurfがいくつかの追加機能を獲得したことに気付くでしょう。例えば、最初に計画のために`.windsurfrules`ファイルを編集し、次にシステム検索ツールを呼び出し、最後により多くのWebページを閲覧して最新情報を取得します。
 
-Now you are ready to use the enhanced Cursor project to complete your other tasks!
+これで、拡張Windsurfプロジェクトを使用して他のタスクを完了する準備ができました！
 
-![Tool Usage Example](images/image7.png)
+![ツール使用例](images/image7.png)

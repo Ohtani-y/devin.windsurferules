@@ -1,68 +1,68 @@
-# Transform your $20 Cursor into a Devin-like AI Assistant
+# $15のWindsurfをDevinのようなAIアシスタントに変身させる
 
-This repository gives you everything needed to supercharge your Cursor/Windsurf IDE or GitHub Copilot with **advanced** agentic AI capabilities—similar to the $500/month Devin—but at a fraction of the cost. In under a minute, you'll gain:
+このリポジトリは、WindsurfのIDEまたはGitHub Copilotに**高度な**エージェント型AI機能を追加し、月額$500のDevinと同様の機能を低コストで実現するために必要なすべてを提供します。わずか1分で以下の機能が利用可能になります：
 
-* Automated planning and self-evolution, so your AI "thinks before it acts" and learns from mistakes
-* Extended tool usage, including web browsing, search engine queries, and LLM-driven text/image analysis
-* [Experimental] Multi-agent collaboration, with o1 doing the planning, and regular Claude/GPT-4o doing the execution.
+* 自動計画立案と自己進化機能により、AIは「行動する前に考え」、ミスから学習します
+* Webブラウジング、検索エンジンクエリ、LLM駆動のテキスト/画像分析など、拡張ツールの使用
+* [実験的機能] マルチエージェントコラボレーション（o1が計画を立て、Claude/GPT-4oが実行）
 
-## Why This Matters
+## なぜこれが重要なのか
 
-Devin impressed many by acting like an intern who writes its own plan, updates that plan as it progresses, and even evolves based on your feedback. But you don't need Devin's $500/month subscription to get most of that functionality. By customizing the .cursorrules file, plus a few Python scripts, you'll unlock the same advanced features inside Cursor.
+Devinは、自分で計画を立て、進行に合わせて計画を更新し、フィードバックに基づいて進化するインターンのように振る舞うことで多くの人に感銘を与えました。しかし、その機能のほとんどを利用するためにDevinの月額$500のサブスクリプションは必要ありません。.windsurfrules ファイルとPythonスクリプトをカスタマイズすることで、Windsurf内で同じ高度な機能を利用できます。
 
-## Key Highlights
+## 主な特徴
 
-1.	Easy Setup
+1.	簡単なセットアップ
    
-   Two ways to get started:
+   始める方法は2つあります：
 
-   **Option 1: Using Cookiecutter (Recommended)**
+   **オプション1：Cookiecutterを使用（推奨）**
    ```bash
-   # Install cookiecutter if you haven't
+   # まだcookiecutterをインストールしていない場合
    pip install cookiecutter
 
-   # Create a new project
+   # 新しいプロジェクトを作成
    cookiecutter gh:grapeot/devin.cursorrules --checkout template
    ```
 
-   **Option 2: Manual Setup**
-   Copy the `tools` folder and the following config files into your project root folder: Windsurf users need both `.windsurfrules` and `scratchpad.md` files. Cursor users only need the `.cursorrules` file. Github Copilot users need the `.github/copilot-instructions.md` file.
+   **オプション2：手動セットアップ**
+   `tools`フォルダと以下の設定ファイルをプロジェクトのルートフォルダにコピーします：Windsurfユーザーは`.windsurfrules`と`scratchpad.md`ファイルの両方が必要です。GitHub Copilotユーザーは`.github/copilot-instructions.md`ファイルが必要です。
 
-2.	Planner-Executor Multi-Agent (Experimental)
+2.	プランナー・エグゼキューター マルチエージェント（実験的機能）
 
-   Our new [multi-agent branch](https://github.com/grapeot/devin.cursorrules/tree/multi-agent) introduces a high-level Planner (powered by o1) that coordinates complex tasks, and an Executor (powered by Claude/GPT) that implements step-by-step actions. This two-agent approach drastically improves solution quality, cross-checking, and iteration speed.
+   新しい[マルチエージェントブランチ](https://github.com/grapeot/devin.cursorrules/tree/multi-agent)では、複雑なタスクを調整する高レベルのプランナー（o1を使用）と、ステップバイステップのアクションを実装するエグゼキューター（Claude/GPTを使用）を導入しています。この2つのエージェントアプローチにより、解決策の品質、クロスチェック、反復速度が大幅に向上します。
 
-3.	Extended Toolset
+3.	拡張ツールセット
 
-   Includes:
+   以下を含みます：
    
-   * Web scraping (Playwright)
-   * Search engine integration (DuckDuckGo)
-   * LLM-powered analysis
+   * Webスクレイピング（Playwright）
+   * 検索エンジン連携（DuckDuckGo）
+   * LLM駆動の分析
 
-   The AI automatically decides how and when to use them (just like Devin).
+   AIは（Devinと同様に）これらのツールをいつどのように使用するかを自動的に決定します。
 
-   Note: For screenshot verification features, Playwright browsers will be installed automatically when you first use the feature.
+   注意：スクリーンショット検証機能では、初めて使用する際にPlaywrightブラウザが自動的にインストールされます。
 
-4.	Self-Evolution
+4.	自己進化
 
-   Whenever you correct the AI, it can update its "lessons learned" in .cursorrules. Over time, it accumulates project-specific knowledge and gets smarter with each iteration. It makes AI a coachable and coach-worthy partner.
+   AIを修正するたびに、.windsurfrules内の「学習した教訓」を更新できます。時間の経過とともに、プロジェクト固有の知識を蓄積し、反復ごとにスマートになります。AIを指導可能かつ指導に値するパートナーにします。
 	
-## Usage
+## 使用方法
 
-For a detailed walkthrough of setting up and using devin.cursorrules with Cursor, check out our [step-by-step tutorial](step_by_step_tutorial.md). This guide covers everything from initial Cursor setup to configuring devin.cursorrules and using the enhanced capabilities.
+Windsurfでdevin.windsurferulesをセットアップして使用する詳細な手順については、[ステップバイステップチュートリアル](step_by_step_tutorial.md)をご覧ください。このガイドでは、Windsurfの初期セットアップからdevin.windsurferulesの設定、拡張機能の使用方法まですべてを説明しています。
 
-1. Choose your setup method:
-   - **Cookiecutter (Recommended)**: Follow the prompts after running the cookiecutter command
-   - **Manual**: Copy the files you need from this repository
+1. セットアップ方法を選択：
+   - **Cookiecutter（推奨）**：cookiecutterコマンドを実行した後、プロンプトに従います
+   - **手動**：このリポジトリから必要なファイルをコピーします
 
-2. Configure your environment:
-   - Set up your API keys (optional)
+2. 環境を設定：
+   - APIキーを設定（オプション）
 
-3. Start exploring advanced tasks—such as data gathering, building quick prototypes, or cross-referencing external resources—in a fully agentic manner.
+3. データ収集、クイックプロトタイプの構築、外部リソースの相互参照など、完全にエージェント型の高度なタスクの探索を開始します。
 
-## Want the Details?
+## 詳細を知りたいですか？
 
-Check out our [blog post](https://yage.ai/cursor-to-devin-en.html) on how we turned $20 into $500-level AI capabilities in just one hour. It explains the philosophy behind process planning, self-evolution, and fully automated workflows. You'll also find side-by-side comparisons of Devin, Cursor, and Windsurf, plus a step-by-step tutorial on setting this all up from scratch.
+$15を1時間で$500レベルのAI機能に変える方法についての[ブログ記事](https://yage.ai/cursor-to-devin-en.html)をご覧ください。プロセス計画、自己進化、完全自動化されたワークフローの背後にある哲学を説明しています。また、Devin、Cursor、Windsurfの比較や、これらすべてを一から設定するためのステップバイステップのチュートリアルも見つかります。
 
-License: MIT
+ライセンス：MIT
