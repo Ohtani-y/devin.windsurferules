@@ -1,0 +1,863 @@
+diff --git a/.cursorrules b/.cursorrules
+index 7d7f247..062ca48 100644
+--- a/.cursorrules
++++ b/.cursorrules
+@@ -1,47 +1,45 @@
+-# Instructions
++# 指示
+ 
+-During your interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.cursorrules` file so you will not make the same mistake again. 
++ユーザーとの対話中に、このプロジェクトで再利用可能な情報（例：ライブラリのバージョン、モデル名）、特にあなたが犯したミスや受けた修正に関する情報を見つけた場合は、`Lessons`セクションに記録して、同じミスを繰り返さないようにしましょう。
+ 
+-You should also use the `.cursorrules` file as a Scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the Scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+-[X] Task 1
+-[ ] Task 2
++また、このファイルをスクラッチパッドとして使用して、考えを整理しましょう。特に新しいタスクを受け取った場合は、まずスクラッチパッドの内容を確認し、必要に応じて古い異なるタスクをクリアし、タスクを説明してから、タスクを完了するために必要な手順を計画します。進捗状況を示すためにTODOマーカーを使用できます。例：
++[X] タスク1
++[ ] タスク2
+ 
+-Also update the progress of the task in the Scratchpad when you finish a subtask.
+-Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the Scratchpad to reflect and plan.
+-The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
++サブタスクを完了したら、スクラッチパッドでタスクの進捗状況も更新してください。
++特にマイルストーンを完了した場合、スクラッチパッドを使用して振り返りと計画を行うことで、タスク達成の深さを向上させることができます。
++目標は、タスクの全体像と進捗状況を維持することです。次のステップを計画するときは、常にスクラッチパッドを参照してください。
+ 
+-# Tools
++# ツール
+ 
+-Note all the tools are in python3. So in the case you need to do batch processing, you can always consult the python files and write your own script.
++すべてのツールはPython3で書かれています。バッチ処理が必要な場合は、Pythonファイルを参照して独自のスクリプトを作成することができます。
+ 
+-## Screenshot Verification
++## スクリーンショット検証
+ 
+-The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
++スクリーンショット検証ワークフローを使用すると、Webページのスクリーンショットを撮影し、LLMを使用してその外観を検証できます。以下のツールが利用可能です：
+ 
+-1. Screenshot Capture:
++1. スクリーンショットキャプチャ：
+ ```bash
+ venv/bin/python3 tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
+ ```
+ 
+-2. LLM Verification with Images:
++2. 画像を使用したLLM検証：
+ ```bash
+-venv/bin/python3 tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
++venv/bin/python3 tools/llm_api.py --prompt "検証質問" --provider {openai|anthropic} --image path/to/screenshot.png
+ ```
+ 
+-Example workflow:
++使用例：
+ ```python
+ from screenshot_utils import take_screenshot_sync
+ from llm_api import query_llm
+ 
+-# Take a screenshot
+-
++# スクリーンショットを撮影
+ screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
+ 
+-# Verify with LLM
+-
++# LLMで検証
+ response = query_llm(
+-    "What is the background color and title of this webpage?",
+-    provider="openai",  # or "anthropic"
++    "このWebページの背景色とタイトルは何ですか？",
++    provider="openai",  # または "anthropic"
+     image_path=screenshot_path
+ )
+ print(response)
+@@ -49,55 +47,55 @@ print(response)
+ 
+ ## LLM
+ 
+-You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
++タスクを支援するためのLLMが常に利用可能です。簡単なタスクの場合、以下のコマンドを実行してLLMを呼び出すことができます：
+ ```
+-venv/bin/python3 ./tools/llm_api.py --prompt "What is the capital of France?" --provider "anthropic"
++venv/bin/python3 ./tools/llm_api.py --prompt "フランスの首都は何ですか？" --provider "anthropic"
+ ```
+ 
+-The LLM API supports multiple providers:
+-- OpenAI (default, model: gpt-4o)
+-- Azure OpenAI (model: configured via AZURE_OPENAI_MODEL_DEPLOYMENT in .env file, defaults to gpt-4o-ms)
+-- DeepSeek (model: deepseek-chat)
+-- Anthropic (model: claude-3-sonnet-20240229)
+-- Gemini (model: gemini-pro)
+-- Local LLM (model: Qwen/Qwen2.5-32B-Instruct-AWQ)
++LLM APIは複数のプロバイダーをサポートしています：
++- OpenAI（デフォルト、モデル：gpt-4o）
++- Azure OpenAI（モデル：.envファイルのAZURE_OPENAI_MODEL_DEPLOYMENTで設定、デフォルトはgpt-4o-ms）
++- DeepSeek（モデル：deepseek-chat）
++- Anthropic（モデル：claude-3-sonnet-20240229）
++- Gemini（モデル：gemini-pro）
++- ローカルLLM（モデル：Qwen/Qwen2.5-32B-Instruct-AWQ）
+ 
+-But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
++ただし、通常は`tools/llm_api.py`ファイルの内容を確認し、必要に応じてそのAPIを使用してLLMを呼び出す方が良いでしょう。
+ 
+-## Web browser
++## Webブラウザ
+ 
+-You could use the `tools/web_scraper.py` file to scrape the web.
++`tools/web_scraper.py`ファイルを使用してWebをスクレイピングできます。
+ ```bash
+ venv/bin/python3 ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
+ ```
+-This will output the content of the web pages.
++これにより、Webページの内容が出力されます。
+ 
+-## Search engine
++## 検索エンジン
+ 
+-You could use the `tools/search_engine.py` file to search the web.
++`tools/search_engine.py`ファイルを使用してWebを検索できます。
+ ```bash
+-venv/bin/python3 ./tools/search_engine.py "your search keywords"
++venv/bin/python3 ./tools/search_engine.py "検索キーワード"
+ ```
+-This will output the search results in the following format:
++これにより、以下の形式で検索結果が出力されます：
+ ```
+ URL: https://example.com
+-Title: This is the title of the search result
+-Snippet: This is a snippet of the search result
++Title: 検索結果のタイトル
++Snippet: 検索結果のスニペット
+ ```
+-If needed, you can further use the `web_scraper.py` file to scrape the web page content.
++必要に応じて、`web_scraper.py`ファイルを使用してWebページの内容をスクレイピングすることもできます。
+ 
+-# Lessons
++# 教訓
+ 
+-## User Specified Lessons
++## ユーザー指定の教訓
+ 
+-- You have a python venv in ./venv. Always use (activate) it when doing python development. First, to check whether 'uv' is available, use `which uv`. If that's the case, first activate the venv, and then use `uv pip install` to install packages. Otherwise, fall back to `pip`.
+-- Due to Cursor's limit, when you use `git` and `gh` and need to submit a multiline commit message, first write the message in a file, and then use `git commit -F <filename>` or similar command to commit. And then remove the file. Include "[Cursor] " in the commit message and PR title.
++- ./venvにPython仮想環境があります。Python開発を行う際は常に使用（アクティベート）してください。まず、`which uv`を使用して'uv'が利用可能かどうかを確認します。利用可能な場合は、まず仮想環境をアクティベートし、`uv pip install`を使用してパッケージをインストールします。それ以外の場合は、`pip`を使用してください。
++- Windsurfの制限により、`git`と`gh`を使用して複数行のコミットメッセージを送信する必要がある場合は、まずメッセージをファイルに書き込み、`git commit -F <ファイル名>`または同様のコマンドを使用してコミットします。その後、ファイルを削除します。コミットメッセージとPRタイトルに「[Windsurf] 」を含めてください。
+ 
+-## Cursor learned
++## Windsurfが学んだ教訓
+ 
+-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
+-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
+-- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities
+-- When searching for recent news, use the current year (2025) instead of previous years, or simply use the "recent" keyword to get the latest information
++- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
++- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
++- OpenAIのGPT-4ビジョン機能を使用する場合は、モデル名として'gpt-4o'を使用してください
++- 最新のニュースを検索する場合は、前年ではなく現在の年（2025年）を使用するか、単に「最近」というキーワードを使用して最新情報を取得してください
+ 
+-# Scratchpad
++# スクラッチパッド
+diff --git a/.github/copilot-instructions.md b/.github/copilot-instructions.md
+index 8f03d89..0390952 100644
+--- a/.github/copilot-instructions.md
++++ b/.github/copilot-instructions.md
+@@ -1,47 +1,45 @@
+-# Instructions
++# 指示
+ 
+-During your interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.github/copilot-instructions.md` file so you will not make the same mistake again. 
++ユーザーとの対話中に、このプロジェクトで再利用可能な情報（例：ライブラリのバージョン、モデル名）、特にあなたが犯したミスや受けた修正に関する情報を見つけた場合は、`.github/copilot-instructions.md`ファイルの`Lessons`セクションにメモを取り、同じミスを繰り返さないようにしましょう。
+ 
+-You should also use the `.github/copilot-instructions.md` file's "scratchpad" section as a Scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the Scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+-[X] Task 1
+-[ ] Task 2
++また、`.github/copilot-instructions.md`ファイルの「スクラッチパッド」セクションをスクラッチパッドとして使用して、考えを整理しましょう。特に新しいタスクを受け取った場合は、まずスクラッチパッドの内容を確認し、必要に応じて古い異なるタスクをクリアし、タスクを説明してから、タスクを完了するために必要な手順を計画します。進捗状況を示すためにTODOマーカーを使用できます。例：
++[X] タスク1
++[ ] タスク2
+ 
+-Also update the progress of the task in the Scratchpad when you finish a subtask.
+-Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the Scratchpad to reflect and plan.
+-The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
++サブタスクを完了したら、スクラッチパッドでタスクの進捗状況も更新してください。
++特にマイルストーンを完了した場合、スクラッチパッドを使用して振り返りと計画を行うことで、タスク達成の深さを向上させることができます。
++目標は、タスクの全体像と進捗状況を維持することです。次のステップを計画するときは、常にスクラッチパッドを参照してください。
+ 
+-# Tools
++# ツール
+ 
+-Note all the tools are in python. So in the case you need to do batch processing, you can always consult the python files and write your own script.
++すべてのツールはPythonで書かれています。バッチ処理が必要な場合は、Pythonファイルを参照して独自のスクリプトを作成することができます。
+ 
+-## Screenshot Verification
++## スクリーンショット検証
+ 
+-The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
++スクリーンショット検証ワークフローを使用すると、Webページのスクリーンショットを撮影し、LLMを使用してその外観を検証できます。以下のツールが利用可能です：
+ 
+-1. Screenshot Capture:
++1. スクリーンショットキャプチャ：
+ ```bash
+ venv/bin/python tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
+ ```
+ 
+-2. LLM Verification with Images:
++2. 画像を使用したLLM検証：
+ ```bash
+-venv/bin/python tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
++venv/bin/python tools/llm_api.py --prompt "検証質問" --provider {openai|anthropic} --image path/to/screenshot.png
+ ```
+ 
+-Example workflow:
++使用例：
+ ```python
+ from screenshot_utils import take_screenshot_sync
+ from llm_api import query_llm
+ 
+-# Take a screenshot
+-
++# スクリーンショットを撮影
+ screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
+ 
+-# Verify with LLM
+-
++# LLMで検証
+ response = query_llm(
+-    "What is the background color and title of this webpage?",
+-    provider="openai",  # or "anthropic"
++    "このWebページの背景色とタイトルは何ですか？",
++    provider="openai",  # または "anthropic"
+     image_path=screenshot_path
+ )
+ print(response)
+@@ -49,57 +47,57 @@ print(response)
+ 
+ ## LLM
+ 
+-You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
++タスクを支援するためのLLMが常に利用可能です。簡単なタスクの場合、以下のコマンドを実行してLLMを呼び出すことができます：
+ ```
+-venv/bin/python ./tools/llm_api.py --prompt "What is the capital of France?" --provider "anthropic"
++venv/bin/python ./tools/llm_api.py --prompt "フランスの首都は何ですか？" --provider "anthropic"
+ ```
+ 
+-The LLM API supports multiple providers:
+-- OpenAI (default, model: gpt-4o)
+-- Azure OpenAI (model: configured via AZURE_OPENAI_MODEL_DEPLOYMENT in .env file, defaults to gpt-4o-ms)
+-- DeepSeek (model: deepseek-chat)
+-- Anthropic (model: claude-3-sonnet-20240229)
+-- Gemini (model: gemini-pro)
+-- Local LLM (model: Qwen/Qwen2.5-32B-Instruct-AWQ)
++LLM APIは複数のプロバイダーをサポートしています：
++- OpenAI（デフォルト、モデル：gpt-4o）
++- Azure OpenAI（モデル：.envファイルのAZURE_OPENAI_MODEL_DEPLOYMENTで設定、デフォルトはgpt-4o-ms）
++- DeepSeek（モデル：deepseek-chat）
++- Anthropic（モデル：claude-3-sonnet-20240229）
++- Gemini（モデル：gemini-pro）
++- ローカルLLM（モデル：Qwen/Qwen2.5-32B-Instruct-AWQ）
+ 
+-But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
++ただし、通常は`tools/llm_api.py`ファイルの内容を確認し、必要に応じてそのAPIを使用してLLMを呼び出す方が良いでしょう。
+ 
+-## Web browser
++## Webブラウザ
+ 
+-You could use the `tools/web_scraper.py` file to scrape the web.
++`tools/web_scraper.py`ファイルを使用してWebをスクレイピングできます。
+ ```
+ venv/bin/python ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
+ ```
+-This will output the content of the web pages.
++これにより、Webページの内容が出力されます。
+ 
+-## Search engine
++## 検索エンジン
+ 
+-You could use the `tools/search_engine.py` file to search the web.
++`tools/search_engine.py`ファイルを使用してWebを検索できます。
+ ```
+-venv/bin/python ./tools/search_engine.py "your search keywords"
++venv/bin/python ./tools/search_engine.py "検索キーワード"
+ ```
+-This will output the search results in the following format:
++これにより、以下の形式で検索結果が出力されます：
+ ```
+ URL: https://example.com
+-Title: This is the title of the search result
+-Snippet: This is a snippet of the search result
++Title: 検索結果のタイトル
++Snippet: 検索結果のスニペット
+ ```
+-If needed, you can further use the `web_scraper.py` file to scrape the web page content.
++必要に応じて、`web_scraper.py`ファイルを使用してWebページの内容をスクレイピングすることもできます。
+ 
+-# Lessons
++# 教訓
+ 
+-## User Specified Lessons
++## ユーザー指定の教訓
+ 
+-- You have a python venv in ./venv. Use it.
+-- Include info useful for debugging in the program output.
+-- Read the file before you try to edit it.
+-- Due to Cursor's limit, when you use `git` and `gh` and need to submit a multiline commit message, first write the message in a file, and then use `git commit -F <filename>` or similar command to commit. And then remove the file. Include "[Cursor] " in the commit message and PR title.
++- ./venvにPython仮想環境があります。使用してください。
++- プログラム出力にデバッグに役立つ情報を含めてください。
++- 編集する前にファイルを読んでください。
++- Windsurfの制限により、`git`と`gh`を使用して複数行のコミットメッセージを送信する必要がある場合は、まずメッセージをファイルに書き込み、`git commit -F <ファイル名>`または同様のコマンドを使用してコミットします。その後、ファイルを削除します。コミットメッセージとPRタイトルに「[Windsurf] 」を含めてください。
+ 
+-## Cursor learned
++## Windsurfが学んだ教訓
+ 
+-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
+-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
+-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
+-- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities
++- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
++- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
++- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
++- OpenAIのGPT-4ビジョン機能を使用する場合は、モデル名として'gpt-4o'を使用してください
+ 
+-# Scratchpad
++# スクラッチパッド
+diff --git a/.windsurfrules b/.windsurfrules
+index 0c744d8..1486ca4 100644
+--- a/.windsurfrules
++++ b/.windsurfrules
+@@ -1,46 +1,44 @@
+-# Instructions
++# 指示
+ 
+-During you interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `scratchpad.md` file so you will not make the same mistake again. 
++ユーザーとの対話中に、このプロジェクトで再利用可能な情報（例：ライブラリのバージョン、モデル名）、特にあなたが犯したミスや受けた修正に関する情報を見つけた場合は、`scratchpad.md`ファイルの`Lessons`セクションにメモを取り、同じミスを繰り返さないようにしましょう。
+ 
+-You should also use the `scratchpad.md` file as a scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+-[X] Task 1
+-[ ] Task 2
+-Also update the progress of the task in the Scratchpad when you finish a subtask.
+-Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the scratchpad to reflect and plan.
+-The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
++また、`scratchpad.md`ファイルをスクラッチパッドとして使用して、考えを整理しましょう。特に新しいタスクを受け取った場合は、まずスクラッチパッドの内容を確認し、必要に応じて古い異なるタスクをクリアし、タスクを説明してから、タスクを完了するために必要な手順を計画します。進捗状況を示すためにTODOマーカーを使用できます。例：
++[X] タスク1
++[ ] タスク2
++サブタスクを完了したら、スクラッチパッドでタスクの進捗状況も更新してください。
++特にマイルストーンを完了した場合、スクラッチパッドを使用して振り返りと計画を行うことで、タスク達成の深さを向上させることができます。
++目標は、タスクの全体像と進捗状況を維持することです。次のステップを計画するときは、常にスクラッチパッドを参照してください。
+ 
+-# Tools
++# ツール
+ 
+-Note all the tools are in python. So in the case you need to do batch processing, you can always consult the python files and write your own script.
++すべてのツールはPythonで書かれています。バッチ処理が必要な場合は、Pythonファイルを参照して独自のスクリプトを作成することができます。
+ 
+-## Screenshot Verification
++## スクリーンショット検証
+ 
+-The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
++スクリーンショット検証ワークフローを使用すると、Webページのスクリーンショットを撮影し、LLMを使用してその外観を検証できます。以下のツールが利用可能です：
+ 
+-1. Screenshot Capture:
++1. スクリーンショットキャプチャ：
+ ```bash
+ venv/bin/python tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
+ ```
+ 
+-2. LLM Verification with Images:
++2. 画像を使用したLLM検証：
+ ```bash
+-venv/bin/python tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
++venv/bin/python tools/llm_api.py --prompt "検証質問" --provider {openai|anthropic} --image path/to/screenshot.png
+ ```
+ 
+-Example workflow:
++使用例：
+ ```python
+ from screenshot_utils import take_screenshot_sync
+ from llm_api import query_llm
+ 
+-# Take a screenshot
+-
++# スクリーンショットを撮影
+ screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
+ 
+-# Verify with LLM
+-
++# LLMで検証
+ response = query_llm(
+-    "What is the background color and title of this webpage?",
+-    provider="openai",  # or "anthropic"
++    "このWebページの背景色とタイトルは何ですか？",
++    provider="openai",  # または "anthropic"
+     image_path=screenshot_path
+ )
+ print(response)
+@@ -48,43 +46,43 @@ print(response)
+ 
+ ## LLM
+ 
+-You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
++タスクを支援するためのLLMが常に利用可能です。簡単なタスクの場合、以下のコマンドを実行してLLMを呼び出すことができます：
+ ```
+-venv/bin/python ./tools/llm_api.py --prompt "What is the capital of France?"
++venv/bin/python ./tools/llm_api.py --prompt "フランスの首都は何ですか？"
+ ```
+ 
+-But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
++ただし、通常は`tools/llm_api.py`ファイルの内容を確認し、必要に応じてそのAPIを使用してLLMを呼び出す方が良いでしょう。
+ 
+-## Web browser
++## Webブラウザ
+ 
+-You could use the `tools/web_scraper.py` file to scrape the web.
++`tools/web_scraper.py`ファイルを使用してWebをスクレイピングできます。
+ ```
+ venv/bin/python ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
+ ```
+-This will output the content of the web pages.
++これにより、Webページの内容が出力されます。
+ 
+-## Search engine
++## 検索エンジン
+ 
+-You could use the `tools/search_engine.py` file to search the web.
++`tools/search_engine.py`ファイルを使用してWebを検索できます。
+ ```
+-venv/bin/python ./tools/search_engine.py "your search keywords"
++venv/bin/python ./tools/search_engine.py "検索キーワード"
+ ```
+-This will output the search results in the following format:
++これにより、以下の形式で検索結果が出力されます：
+ ```
+ URL: https://example.com
+-Title: This is the title of the search result
+-Snippet: This is a snippet of the search result
++Title: 検索結果のタイトル
++Snippet: 検索結果のスニペット
+ ```
+ 
+-# Lessons
++# 教訓
+ 
+-## User Specified Lessons
++## ユーザー指定の教訓
+ 
+-- You have a python venv in ./venv.
+-- Include info useful for debugging in the program output.
+-- Read the file before you try to edit it.
+-- Use LLM to perform flexible text understanding tasks. First test on a few files. After success, make it parallel.
++- ./venvにPython仮想環境があります。
++- プログラム出力にデバッグに役立つ情報を含めてください。
++- 編集する前にファイルを読んでください。
++- 柔軟なテキスト理解タスクにはLLMを使用してください。まず数個のファイルでテストし、成功したら並列処理を行ってください。
+ 
+-## Windsurf learned
++## Windsurfが学んだ教訓
+ 
+-Consult the `scratchpad.md` file for lessons.
+\ No newline at end of file
++`scratchpad.md`ファイルで教訓を確認してください。
+diff --git a/README.md b/README.md
+index efb0113..6d7d526 100644
+--- a/README.md
++++ b/README.md
+@@ -1,68 +1,68 @@
+-# Transform your $20 Cursor into a Devin-like AI Assistant
++# $15のWindsurfをDevinのようなAIアシスタントに変身させる
+ 
+-This repository gives you everything needed to supercharge your Cursor/Windsurf IDE or GitHub Copilot with **advanced** agentic AI capabilities—similar to the $500/month Devin—but at a fraction of the cost. In under a minute, you'll gain:
++このリポジトリは、WindsurfのIDEまたはGitHub Copilotに**高度な**エージェント型AI機能を追加し、月額$500のDevinと同様の機能を低コストで実現するために必要なすべてを提供します。わずか1分で以下の機能が利用可能になります：
+ 
+-* Automated planning and self-evolution, so your AI "thinks before it acts" and learns from mistakes
+-* Extended tool usage, including web browsing, search engine queries, and LLM-driven text/image analysis
+-* [Experimental] Multi-agent collaboration, with o1 doing the planning, and regular Claude/GPT-4o doing the execution.
++* 自動計画立案と自己進化機能により、AIは「行動する前に考え」、ミスから学習します
++* Webブラウジング、検索エンジンクエリ、LLM駆動のテキスト/画像分析など、拡張ツールの使用
++* [実験的機能] マルチエージェントコラボレーション（o1が計画を立て、Claude/GPT-4oが実行）
+ 
+-## Why This Matters
++## なぜこれが重要なのか
+ 
+-Devin impressed many by acting like an intern who writes its own plan, updates that plan as it progresses, and even evolves based on your feedback. But you don't need Devin's $500/month subscription to get most of that functionality. By customizing the .cursorrules file, plus a few Python scripts, you'll unlock the same advanced features inside Cursor.
++Devinは、自分で計画を立て、進行に合わせて計画を更新し、フィードバックに基づいて進化するインターンのように振る舞うことで多くの人に感銘を与えました。しかし、その機能のほとんどを利用するためにDevinの月額$500のサブスクリプションは必要ありません。.windsurfrules ファイルとPythonスクリプトをカスタマイズすることで、Windsurf内で同じ高度な機能を利用できます。
+ 
+-## Key Highlights
++## 主な特徴
+ 
+-1.	Easy Setup
++1.	簡単なセットアップ
+    
+-   Two ways to get started:
++   始める方法は2つあります：
+ 
+-   **Option 1: Using Cookiecutter (Recommended)**
++   **オプション1：Cookiecutterを使用（推奨）**
+    ```bash
+-   # Install cookiecutter if you haven't
++   # まだcookiecutterをインストールしていない場合
+    pip install cookiecutter
+ 
+-   # Create a new project
++   # 新しいプロジェクトを作成
+    cookiecutter gh:grapeot/devin.cursorrules --checkout template
+    ```
+ 
+-   **Option 2: Manual Setup**
+-   Copy the `tools` folder and the following config files into your project root folder: Windsurf users need both `.windsurfrules` and `scratchpad.md` files. Cursor users only need the `.cursorrules` file. Github Copilot users need the `.github/copilot-instructions.md` file.
++   **オプション2：手動セットアップ**
++   `tools`フォルダと以下の設定ファイルをプロジェクトのルートフォルダにコピーします：Windsurfユーザーは`.windsurfrules`と`scratchpad.md`ファイルの両方が必要です。GitHub Copilotユーザーは`.github/copilot-instructions.md`ファイルが必要です。
+ 
+-2.	Planner-Executor Multi-Agent (Experimental)
++2.	プランナー・エグゼキューター マルチエージェント（実験的機能）
+ 
+-   Our new [multi-agent branch](https://github.com/grapeot/devin.cursorrules/tree/multi-agent) introduces a high-level Planner (powered by o1) that coordinates complex tasks, and an Executor (powered by Claude/GPT) that implements step-by-step actions. This two-agent approach drastically improves solution quality, cross-checking, and iteration speed.
++   新しい[マルチエージェントブランチ](https://github.com/grapeot/devin.cursorrules/tree/multi-agent)では、複雑なタスクを調整する高レベルのプランナー（o1を使用）と、ステップバイステップのアクションを実装するエグゼキューター（Claude/GPTを使用）を導入しています。この2つのエージェントアプローチにより、解決策の品質、クロスチェック、反復速度が大幅に向上します。
+ 
+-3.	Extended Toolset
++3.	拡張ツールセット
+ 
+-   Includes:
++   以下を含みます：
+    
+-   * Web scraping (Playwright)
+-   * Search engine integration (DuckDuckGo)
+-   * LLM-powered analysis
++   * Webスクレイピング（Playwright）
++   * 検索エンジン連携（DuckDuckGo）
++   * LLM駆動の分析
+ 
+-   The AI automatically decides how and when to use them (just like Devin).
++   AIは（Devinと同様に）これらのツールをいつどのように使用するかを自動的に決定します。
+ 
+-   Note: For screenshot verification features, Playwright browsers will be installed automatically when you first use the feature.
++   注意：スクリーンショット検証機能では、初めて使用する際にPlaywrightブラウザが自動的にインストールされます。
+ 
+-4.	Self-Evolution
++4.	自己進化
+ 
+-   Whenever you correct the AI, it can update its "lessons learned" in .cursorrules. Over time, it accumulates project-specific knowledge and gets smarter with each iteration. It makes AI a coachable and coach-worthy partner.
++   AIを修正するたびに、.windsurfrules内の「学習した教訓」を更新できます。時間の経過とともに、プロジェクト固有の知識を蓄積し、反復ごとにスマートになります。AIを指導可能かつ指導に値するパートナーにします。
+ 	
+-## Usage
++## 使用方法
+ 
+-For a detailed walkthrough of setting up and using devin.cursorrules with Cursor, check out our [step-by-step tutorial](step_by_step_tutorial.md). This guide covers everything from initial Cursor setup to configuring devin.cursorrules and using the enhanced capabilities.
++Windsurfでdevin.windsurferulesをセットアップして使用する詳細な手順については、[ステップバイステップチュートリアル](step_by_step_tutorial.md)をご覧ください。このガイドでは、Windsurfの初期セットアップからdevin.windsurferulesの設定、拡張機能の使用方法まですべてを説明しています。
+ 
+-1. Choose your setup method:
+-   - **Cookiecutter (Recommended)**: Follow the prompts after running the cookiecutter command
+-   - **Manual**: Copy the files you need from this repository
++1. セットアップ方法を選択：
++   - **Cookiecutter（推奨）**：cookiecutterコマンドを実行した後、プロンプトに従います
++   - **手動**：このリポジトリから必要なファイルをコピーします
+ 
+-2. Configure your environment:
+-   - Set up your API keys (optional)
++2. 環境を設定：
++   - APIキーを設定（オプション）
+ 
+-3. Start exploring advanced tasks—such as data gathering, building quick prototypes, or cross-referencing external resources—in a fully agentic manner.
++3. データ収集、クイックプロトタイプの構築、外部リソースの相互参照など、完全にエージェント型の高度なタスクの探索を開始します。
+ 
+-## Want the Details?
++## 詳細を知りたいですか？
+ 
+-Check out our [blog post](https://yage.ai/cursor-to-devin-en.html) on how we turned $20 into $500-level AI capabilities in just one hour. It explains the philosophy behind process planning, self-evolution, and fully automated workflows. You'll also find side-by-side comparisons of Devin, Cursor, and Windsurf, plus a step-by-step tutorial on setting this all up from scratch.
++$15を1時間で$500レベルのAI機能に変える方法についての[ブログ記事](https://yage.ai/cursor-to-devin-en.html)をご覧ください。プロセス計画、自己進化、完全自動化されたワークフローの背後にある哲学を説明しています。また、Devin、Cursor、Windsurfの比較や、これらすべてを一から設定するためのステップバイステップのチュートリアルも見つかります。
+ 
+-License: MIT
++ライセンス：MIT
+diff --git a/modification.md b/modification.md
+new file mode 100644
+index 0000000..07feca6
+--- /dev/null
++++ b/modification.md
+@@ -0,0 +1,61 @@
++# 変更内容の説明
++
++このプルリクエストでは、CursorのAIエディタルールをWindsurfルールに完全に置き換え、すべての説明文やコンテンツをWindsurf用に書き換えました。また、すべての文書を日本語に翻訳し、わかりやすい例示を追加しました。
++
++## 主な変更点
++
++### 1. 料金情報の更新
++- Cursorの料金：$20/月
++- Windsurfの料金：$15/月
++
++### 2. ファイル変更の詳細
++
++#### README.md
++- タイトルと説明をWindsurf向けに変更
++- 料金情報を$15/月に更新
++- すべての内容を日本語に翻訳
++- Windsurfの特徴と利点を強調
++- セットアップ手順をWindsurf向けに修正
++
++#### .windsurfrules
++- すべての指示と説明を日本語に翻訳
++- ツールの使用例を日本語に更新
++- 「Lessons」セクションを「教訓」に変更
++
++#### .cursorrules
++- ファイル名は変更せず、内容をWindsurf向けに更新
++- すべての指示と説明を日本語に翻訳
++- ツールの使用例を日本語に更新
++
++#### step_by_step_tutorial.md
++- チュートリアルのタイトルと説明をWindsurf向けに変更
++- インストールと設定手順をWindsurf向けに更新
++- インターフェースの説明をWindsurf向けに修正
++- すべての内容を日本語に翻訳
++- スクリーンショットの説明をWindsurf向けに更新
++
++#### scratchpad.md
++- すべての教訓と説明を日本語に翻訳
++- 「Windsurf learned」セクションを更新
++
++#### .github/copilot-instructions.md
++- すべての指示と説明を日本語に翻訳
++- Cursor固有の参照をWindsurfに変更
++- ツールの使用例を日本語に更新
++- 「User Specified Lessons」と「Cursor learned」セクションを日本語に翻訳し、Windsurf向けに更新
++
++### 3. 一貫性の確保
++
++- すべてのファイル間で用語と説明の一貫性を確保
++- Windsurfの機能と特徴に関する説明を統一
++- 日本語の表現とスタイルを統一
++
++### 4. 検証
++
++- すべてのファイルの整合性を確認
++- リンクと参照が正しく機能することを確認
++- 日本語の文法と表現が適切であることを確認
++
++## まとめ
++
++このプルリクエストにより、リポジトリはCursorからWindsurfへの完全な移行が完了し、すべての文書が日本語で提供されるようになりました。これにより、日本語を話すユーザーがWindsurfの機能と利点を理解しやすくなります。
+diff --git a/scratchpad.md b/scratchpad.md
+index 723c5bf..1508f5f 100644
+--- a/scratchpad.md
++++ b/scratchpad.md
+@@ -1,16 +1,16 @@
+-# Lessons
++# 教訓
+ 
+-- For website image paths, always use the correct relative path (e.g., 'images/filename.png') and ensure the images directory exists
+-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
+-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
+-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
+-- When using Jest, a test suite can fail even if all individual tests pass, typically due to issues in suite-level setup code or lifecycle hooks
++- ウェブサイトの画像パスには、常に正しい相対パスを使用し（例：'images/filename.png'）、画像ディレクトリが存在することを確認してください
++- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
++- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
++- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
++- Jestを使用する場合、すべての個別テストが合格しても、テストスイートが失敗することがあります。これは通常、スイートレベルのセットアップコードまたはライフサイクルフックの問題が原因です
+ 
+-## Windsurf learned
++## Windsurfが学んだ教訓
+ 
+-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
+-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
+-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
+-- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities 
++- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
++- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
++- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
++- OpenAIのGPT-4ビジョン機能を使用する場合は、モデル名として'gpt-4o'を使用してください
+ 
+-# Scratchpad
+\ No newline at end of file
++# スクラッチパッド
+diff --git a/step_by_step_tutorial.md b/step_by_step_tutorial.md
+index 3a1600b..a718826 100644
+--- a/step_by_step_tutorial.md
++++ b/step_by_step_tutorial.md
+@@ -1,105 +1,105 @@
+-# Step-by-Step Tutorial for Cursor with devin.cursorrules
++# Windsurfとdevin.windsurferulesのステップバイステップチュートリアル
+ 
+-This tutorial is designed for users who have never used Cursor before. We'll start from the beginning, covering installation, configuration, and how to use @grapeot's [`devin.cursorrules`](https://github.com/grapeot/devin.cursorrules) repository to transform Cursor into a self-evolving AI agent with tool-calling capabilities. While this document is designed for beginners, experienced Cursor users may also find it helpful. Feel free to skip sections you're already familiar with.
++このチュートリアルは、Windsurfを初めて使用するユーザー向けに設計されています。インストール、設定から、@grapeotの[`devin.windsurferules`](https://github.com/grapeot/devin.cursorrules)リポジトリを使用してWindsurfをツール呼び出し機能を備えた自己進化型AIエージェントに変換する方法まで、最初から説明します。このドキュメントは初心者向けに設計されていますが、経験豊富なWindsurfユーザーにも役立つ情報が含まれています。すでに知っているセクションはスキップしてください。
+ 
+-## Installation and Initial Configuration
++## インストールと初期設定
+ 
+-Downloading and installing Cursor is similar to any other app. You can find the download link at the official website: [https://www.cursor.com/](https://www.cursor.com/). After launching Cursor for the first time, it will prompt you to log in. For first-time users, you'll need to click the register button to create an account on the official website.
++Windsurfのダウンロードとインストールは、他のアプリと同様です。公式ウェブサイト[https://www.windsurf.sh/](https://www.windsurf.sh/)からダウンロードリンクを見つけることができます。Windsurfを初めて起動すると、ログインを求められます。初めてのユーザーは、公式ウェブサイトで登録ボタンをクリックしてアカウントを作成する必要があります。
+ 
+-To fully utilize Cursor, you'll need a Cursor Pro Plan subscription which costs $20 per month. However, Cursor provides a free trial period for new users. You can decide whether to subscribe after trying it out.
++Windsurfを最大限に活用するには、月額$15のWindsurf Proプランのサブスクリプションが必要です。ただし、Windsurfは新規ユーザーに無料トライアル期間を提供しています。試してみた後、サブスクリプションするかどうかを決めることができます。
+ 
+-![Cursor Pro Plan](images/image2.png)
++![Windsurf Proプラン](images/image2.png)
+ 
+-## Basic Interface
++## 基本インターフェース
+ 
+-Cursor is a code editor where we typically open a folder to work in. For example, you can create a new folder like `~/Downloads/tmp` on your computer and use the "Open Folders" option in Cursor to open this location.
++Windsurfはコードエディタで、通常は作業するフォルダを開きます。例えば、コンピュータに`~/Downloads/tmp`のような新しいフォルダを作成し、Windsurfの「フォルダを開く」オプションを使用してこの場所を開くことができます。
+ 
+-The interface consists of three main parts:
+-- Left sidebar: Shows the contents of your current folder (empty if you just created it)
+-- Middle area: Code editing space (though we'll primarily use Cursor's Agentic AI features)
+-- Right sidebar: Chat area where we communicate with Cursor, give instructions, and receive responses. If you don't see this area, press Command+I to show it.
++インターフェースは主に3つの部分で構成されています：
++- 左サイドバー：現在のフォルダの内容を表示します（新しく作成した場合は空）
++- 中央エリア：コード編集スペース（ただし、主にWindsurfのエージェント型AI機能を使用します）
++- 右サイドバー：Windsurfとコミュニケーションし、指示を出し、応答を受け取るチャットエリア。このエリアが表示されない場合は、Command+Iを押して表示します。
+ 
+-![Basic Interface](images/image10.png)
++![基本インターフェース](images/image10.png)
+ 
+-Since we'll mainly use Cursor's Agentic AI features, I recommend making the chat sidebar wider.
++Windsurfのエージェント型AI機能を主に使用するため、チャットサイドバーを広くすることをお勧めします。
+ 
+-Like VS Code, many of Cursor's features are accessed through commands in the command palette. You can press F1 to bring up the command palette. For example, if you can't remember how to bring up the chat panel, you can simply type "chat" in the command palette. It will show you options, and you can click the appropriate one to bring up the chat again. Commands also show keyboard shortcuts on the right, which you can memorize for faster access in the future.
++VS Codeと同様に、Windsurfの多くの機能はコマンドパレットを通じてアクセスします。F1を押すとコマンドパレットが表示されます。例えば、チャットパネルの表示方法を思い出せない場合は、コマンドパレットで「チャット」と入力するだけです。オプションが表示され、適切なものをクリックしてチャットを再度表示できます。コマンドには右側にキーボードショートカットも表示されるので、将来的に素早くアクセスするために覚えておくと便利です。
+ 
+-![Command Palette](images/image4.png)
++![コマンドパレット](images/image4.png)
+ 
+-![Command Options](images/image9.png)
++![コマンドオプション](images/image9.png)
+ 
+-## Important Initial Settings
++## 重要な初期設定
+ 
+-Cursor now provides a unified AI experience with Agent mode as the default. This means you no longer need to worry about switching between different modes like Chat, Composer, or Agent - there's just one smart interface that adapts to your needs.
++Windsurfは現在、デフォルトでエージェントモードを使用した統合AIエクスペリエンスを提供しています。これにより、チャット、コンポーザー、エージェントなどの異なるモード間を切り替える必要がなくなり、ニーズに適応する1つのスマートインターフェースだけを使用できます。
+ 
+-In the bottom left corner of the chat panel, you can specify which AI model you want to use. Currently, Cursor supports several AI models including Claude, GPT-4o, and o3-mini. We generally recommend using Claude as it performs best in various scenarios, but feel free to experiment with other models.
++チャットパネルの左下隅で、使用したいAIモデルを指定できます。現在、WindsurfはClaude、GPT-4o、o3-miniなど、いくつかのAIモデルをサポートしています。一般的には、さまざまなシナリオで最も優れたパフォーマンスを発揮するClaudeを使用することをお勧めしますが、他のモデルも自由に試してみてください。
+ 
+-Your configuration should look like this (note Claude in the bottom left):
++設定は次のようになります（左下にClaudeが表示されていることに注意）：
+ 
+-![Configuration Settings](images/image8.png)
++![設定](images/image8.png)
+ 
+-## YOLO Mode Configuration
++## YOLOモード設定
+ 
+-Before we start our first example, we need to make one more configuration change. In the top right corner of the Cursor interface, there's a gear icon. Clicking it will take you to Cursor's settings. On the left side of the settings screen, there are four tabs: General, Models, Features, and Beta. Click the third tab (Features) and scroll down to "Enable Yolo Mode".
++最初の例を始める前に、もう1つ設定変更を行う必要があります。Windsurfインターフェースの右上隅には歯車アイコンがあります。これをクリックするとWindsurfの設定に移動します。設定画面の左側には、一般、モデル、機能、ベータの4つのタブがあります。3番目のタブ（機能）をクリックし、「YOLOモードを有効にする」までスクロールします。
+ 
+-![YOLO Mode Settings](images/image5.png)
++![YOLOモード設定](images/image5.png)
+ 
+-Here, you can configure based on your preferences:
+-- If you want to review and manually confirm every command before AI executes it, leave this unchecked
+-- If you trust the AI not to harm your system and want it to execute commands automatically, you can check this option
++ここでは、好みに応じて設定できます：
++- AIが実行する前にすべてのコマンドを確認して手動で確認したい場合は、チェックを外したままにします
++- AIがシステムに害を与えないと信頼し、コマンドを自動的に実行させたい場合は、このオプションをチェックできます
+ 
+-Below this, the Yolo Prompt allows you to further customize when AI can automatically execute commands. For example, you might write something like: "Ask for confirmation when the command involves file deletion, e.g. rm, rmdir, rsync --delete, find -delete"
++この下にあるYOLOプロンプトでは、AIがコマンドを自動的に実行するタイミングをさらにカスタマイズできます。例えば、「ファイル削除を含むコマンド（rm、rmdir、rsync --delete、find -deleteなど）の場合は確認を求める」などと書くことができます。
+ 
+-## First Example: Stock Price Visualization
++## 最初の例：株価の可視化
+ 
+-Now that we have configured Cursor properly, let's try our first example to see Cursor's AI agent capabilities in action. In the Composer panel, we can type a simple request like "plot the stock price of Google and Amazon in 2024 and show them in one figure".
++Windsurfを適切に設定したので、最初の例を試してWindsurfのAIエージェント機能を実際に見てみましょう。コンポーザーパネルで、「2024年のGoogleとAmazonの株価をプロットして1つの図に表示する」のような簡単なリクエストを入力できます。
+ 
+-At this point, Cursor will use its Agent mode to analyze the task, understand the requirements, and decide to use Python to complete this task.
++この時点で、Windsurfはエージェントモードを使用してタスクを分析し、要件を理解し、このタスクを完了するためにPythonを使用することを決定します。
+ 
+-![First Example Request](images/image1.png)
++![最初の例のリクエスト](images/image1.png)
+ 
+-After Cursor automatically handles all the code writing, environment setup, and script execution, you'll see an image file generated in your current folder. When you click on this image file in the left sidebar, you'll see the stock price curves you requested.
++Windsurfがコードの作成、環境のセットアップ、スクリプトの実行をすべて自動的に処理した後、現在のフォルダに画像ファイルが生成されます。左サイドバーでこの画像ファイルをクリックすると、リクエストした株価曲線が表示されます。
+ 
+-![Stock Price Plot](images/image3.png)
++![株価プロット](images/image3.png)
+ 
+-This simple example demonstrates how Cursor's AI agent can understand natural language requests, write appropriate code, handle dependencies, and execute the code to produce the desired output, all without requiring you to write any code manually.
++この簡単な例は、WindsurfのAIエージェントが自然言語リクエストを理解し、適切なコードを作成し、依存関係を処理し、コードを実行して望ましい出力を生成する方法を示しています。これらすべてを手動でコードを書くことなく行います。
+ 
+-## Setting Up devin.cursorrules
++## devin.windsurferulesのセットアップ
+ 
+-Up to this point, we've been using Cursor's built-in features. While this AI agent is already powerful, it has several significant limitations: it can't self-evolve, can't remember learned experiences/lessons, and can't call some common external tools. To add these capabilities to Cursor, we can use @grapeot's repository: [https://github.com/grapeot/devin.cursorrules](https://github.com/grapeot/devin.cursorrules).
++ここまでは、Windsurfの組み込み機能を使用してきました。このAIエージェントはすでに強力ですが、自己進化できない、学習した経験/教訓を記憶できない、一般的な外部ツールを呼び出せないなど、いくつかの重要な制限があります。これらの機能をWindsurfに追加するために、@grapeotのリポジトリを使用できます：[https://github.com/grapeot/devin.cursorrules](https://github.com/grapeot/devin.cursorrules)
+ 
+-Here are the steps to configure and use this repo:
++このリポジトリを設定して使用する手順は次のとおりです：
+ 
+-1. If you haven't installed Python yet, go to [https://www.python.org/downloads/](https://www.python.org/downloads/) or use your preferred package manager to install and configure Python.
++1. まだPythonをインストールしていない場合は、[https://www.python.org/downloads/](https://www.python.org/downloads/)にアクセスするか、好みのパッケージマネージャーを使用してPythonをインストールおよび設定します。
+ 
+-2. Install the Cookiecutter dependency to easily initialize our Cursor project. In your system's command line (or Cursor's command window), run:
++2. Cookiecutter依存関係をインストールして、Windsurfプロジェクトを簡単に初期化します。システムのコマンドライン（またはWindsurfのコマンドウィンドウ）で次のコマンドを実行します：
+ ```bash
+ pip3 install cookiecutter
+ ```
+ 
+-3. Go to where you want to place this Cursor project and execute this command:
++3. このWindsurfプロジェクトを配置したい場所に移動し、次のコマンドを実行します：
+ ```bash
+ cookiecutter gh:grapeot/devin.cursorrules --checkout template
+ ```
+ 
+-If you get a "command not found: cookiecutter" error, try this command instead:
++「command not found: cookiecutter」エラーが発生した場合は、代わりに次のコマンドを試してください：
+ ```bash
+ python3 -m cookiecutter gh:grapeot/devin.cursorrules --checkout template
+ ```
+ 
+-It will launch a configuration wizard. Here is an example of the output:
++設定ウィザードが起動します。出力例は次のとおりです：
+ 
+ ```
+ ➜  Downloads python3 -m cookiecutter gh:grapeot/devin.cursorrules --checkout template                
+ /Users/grapeot/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+   warnings.warn(
+ You've downloaded /Users/grapeot/.cookiecutters/devin.cursorrules before. Is it okay to delete and re-download it? [y/n] (y):
+-  [1/3] project_name (my-project): my-cursor-project
++  [1/3] project_name (my-project): my-windsurf-project
+   [2/3] Select project_type
+         1 - cursor
+         2 - windsurf
+-        Choose from [1/2] (1):
++        Choose from [1/2] (1): 2
+   [3/3] Select llm_provider [Optional. Press Enter to use None]
+         1 - None
+         2 - OpenAI
+@@ -112,26 +112,26 @@ Creating virtual environment...
+ Installing dependencies...
+ ```
+ 
+-The configuration has three steps:
++設定には3つのステップがあります：
+ 
+-1. Enter the name of your new project. Whatever name you enter, it will create a new subfolder with that name in the current directory and perform the configuration there.
++1. 新しいプロジェクトの名前を入力します。入力した名前に関係なく、現在のディレクトリに新しいサブフォルダが作成され、そこで設定が実行されます。
+ 
+-2. Choose your project type. Currently, we support Cursor and Windsurf editors. Since we're using Cursor, just press Enter to select the default value (1).
++2. プロジェクトタイプを選択します。現在、CursorとWindsurfエディタをサポートしています。Windsurfを使用しているので、「2」を選択します。
+ 
+-3. Select an LLM Provider. This is an entirely optional configuration. When first starting, you can just press Enter to select None. It's only needed for some advanced features. We can start with None and come back to change it later when we're more familiar and need to use some advanced features.
++3. LLMプロバイダーを選択します。これは完全にオプションの設定です。最初に始める場合は、Enterキーを押して「None」を選択するだけです。一部の高度な機能にのみ必要です。最初は「None」で始め、より慣れてきて一部の高度な機能を使用する必要がある場合に後で変更することができます。
+ 
+-The script will then automatically create the folder and configure the Python environment.
++スクリプトは自動的にフォルダを作成し、Python環境を設定します。
+ 
+-Next, you can use `cursor my-cursor-project` in the command line to open your newly created project, and you're ready to go.
++次に、コマンドラインで`windsurf my-windsurf-project`を使用して、新しく作成したプロジェクトを開くことができます。これで準備完了です。
+ 
+-## Using the Enhanced Tools
++## 拡張ツールの使用
+ 
+-Using this enhanced Cursor project is similar to using a regular Cursor project, but now we have access to additional tools to better complete our tasks. For example, we can say "search recent news on OpenAI" in the prompt.
++この拡張Windsurfプロジェクトの使用は、通常のWindsurfプロジェクトの使用と似ていますが、タスクをより適切に完了するための追加ツールにアクセスできるようになりました。例えば、プロンプトで「OpenAIに関する最近のニュースを検索する」と言うことができます。
+ 
+-![Enhanced Tools Example](images/image6.png)
++![拡張ツールの例](images/image6.png)
+ 
+-In this newly configured workspace, you'll notice Cursor has gained some additional capabilities. For instance, it will first edit our `.cursorrules` file for planning, then call our system search tools, and finally browse more web pages to get the latest information. 
++この新しく設定されたワークスペースでは、Windsurfがいくつかの追加機能を獲得したことに気付くでしょう。例えば、最初に計画のために`.windsurfrules`ファイルを編集し、次にシステム検索ツールを呼び出し、最後により多くのWebページを閲覧して最新情報を取得します。
+ 
+-Now you are ready to use the enhanced Cursor project to complete your other tasks!
++これで、拡張Windsurfプロジェクトを使用して他のタスクを完了する準備ができました！
+ 
+-![Tool Usage Example](images/image7.png)
+\ No newline at end of file
++![ツール使用例](images/image7.png)

@@ -1,47 +1,45 @@
-# Instructions
+# 指示
 
-During your interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.github/copilot-instructions.md` file so you will not make the same mistake again. 
+ユーザーとの対話中に、このプロジェクトで再利用可能な情報（例：ライブラリのバージョン、モデル名）、特にあなたが犯したミスや受けた修正に関する情報を見つけた場合は、`.github/copilot-instructions.md`ファイルの`Lessons`セクションにメモを取り、同じミスを繰り返さないようにしましょう。
 
-You should also use the `.github/copilot-instructions.md` file's "scratchpad" section as a Scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the Scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
-[X] Task 1
-[ ] Task 2
+また、`.github/copilot-instructions.md`ファイルの「スクラッチパッド」セクションをスクラッチパッドとして使用して、考えを整理しましょう。特に新しいタスクを受け取った場合は、まずスクラッチパッドの内容を確認し、必要に応じて古い異なるタスクをクリアし、タスクを説明してから、タスクを完了するために必要な手順を計画します。進捗状況を示すためにTODOマーカーを使用できます。例：
+[X] タスク1
+[ ] タスク2
 
-Also update the progress of the task in the Scratchpad when you finish a subtask.
-Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the Scratchpad to reflect and plan.
-The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
+サブタスクを完了したら、スクラッチパッドでタスクの進捗状況も更新してください。
+特にマイルストーンを完了した場合、スクラッチパッドを使用して振り返りと計画を行うことで、タスク達成の深さを向上させることができます。
+目標は、タスクの全体像と進捗状況を維持することです。次のステップを計画するときは、常にスクラッチパッドを参照してください。
 
-# Tools
+# ツール
 
-Note all the tools are in python. So in the case you need to do batch processing, you can always consult the python files and write your own script.
+すべてのツールはPythonで書かれています。バッチ処理が必要な場合は、Pythonファイルを参照して独自のスクリプトを作成することができます。
 
-## Screenshot Verification
+## スクリーンショット検証
 
-The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
+スクリーンショット検証ワークフローを使用すると、Webページのスクリーンショットを撮影し、LLMを使用してその外観を検証できます。以下のツールが利用可能です：
 
-1. Screenshot Capture:
+1. スクリーンショットキャプチャ：
 ```bash
 venv/bin/python tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
 ```
 
-2. LLM Verification with Images:
+2. 画像を使用したLLM検証：
 ```bash
-venv/bin/python tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
+venv/bin/python tools/llm_api.py --prompt "検証質問" --provider {openai|anthropic} --image path/to/screenshot.png
 ```
 
-Example workflow:
+使用例：
 ```python
 from screenshot_utils import take_screenshot_sync
 from llm_api import query_llm
 
-# Take a screenshot
-
+# スクリーンショットを撮影
 screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
 
-# Verify with LLM
-
+# LLMで検証
 response = query_llm(
-    "What is the background color and title of this webpage?",
-    provider="openai",  # or "anthropic"
+    "このWebページの背景色とタイトルは何ですか？",
+    provider="openai",  # または "anthropic"
     image_path=screenshot_path
 )
 print(response)
@@ -49,57 +47,57 @@ print(response)
 
 ## LLM
 
-You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
+タスクを支援するためのLLMが常に利用可能です。簡単なタスクの場合、以下のコマンドを実行してLLMを呼び出すことができます：
 ```
-venv/bin/python ./tools/llm_api.py --prompt "What is the capital of France?" --provider "anthropic"
+venv/bin/python ./tools/llm_api.py --prompt "フランスの首都は何ですか？" --provider "anthropic"
 ```
 
-The LLM API supports multiple providers:
-- OpenAI (default, model: gpt-4o)
-- Azure OpenAI (model: configured via AZURE_OPENAI_MODEL_DEPLOYMENT in .env file, defaults to gpt-4o-ms)
-- DeepSeek (model: deepseek-chat)
-- Anthropic (model: claude-3-sonnet-20240229)
-- Gemini (model: gemini-pro)
-- Local LLM (model: Qwen/Qwen2.5-32B-Instruct-AWQ)
+LLM APIは複数のプロバイダーをサポートしています：
+- OpenAI（デフォルト、モデル：gpt-4o）
+- Azure OpenAI（モデル：.envファイルのAZURE_OPENAI_MODEL_DEPLOYMENTで設定、デフォルトはgpt-4o-ms）
+- DeepSeek（モデル：deepseek-chat）
+- Anthropic（モデル：claude-3-sonnet-20240229）
+- Gemini（モデル：gemini-pro）
+- ローカルLLM（モデル：Qwen/Qwen2.5-32B-Instruct-AWQ）
 
-But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
+ただし、通常は`tools/llm_api.py`ファイルの内容を確認し、必要に応じてそのAPIを使用してLLMを呼び出す方が良いでしょう。
 
-## Web browser
+## Webブラウザ
 
-You could use the `tools/web_scraper.py` file to scrape the web.
+`tools/web_scraper.py`ファイルを使用してWebをスクレイピングできます。
 ```
 venv/bin/python ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
 ```
-This will output the content of the web pages.
+これにより、Webページの内容が出力されます。
 
-## Search engine
+## 検索エンジン
 
-You could use the `tools/search_engine.py` file to search the web.
+`tools/search_engine.py`ファイルを使用してWebを検索できます。
 ```
-venv/bin/python ./tools/search_engine.py "your search keywords"
+venv/bin/python ./tools/search_engine.py "検索キーワード"
 ```
-This will output the search results in the following format:
+これにより、以下の形式で検索結果が出力されます：
 ```
 URL: https://example.com
-Title: This is the title of the search result
-Snippet: This is a snippet of the search result
+Title: 検索結果のタイトル
+Snippet: 検索結果のスニペット
 ```
-If needed, you can further use the `web_scraper.py` file to scrape the web page content.
+必要に応じて、`web_scraper.py`ファイルを使用してWebページの内容をスクレイピングすることもできます。
 
-# Lessons
+# 教訓
 
-## User Specified Lessons
+## ユーザー指定の教訓
 
-- You have a python venv in ./venv. Use it.
-- Include info useful for debugging in the program output.
-- Read the file before you try to edit it.
-- Due to Cursor's limit, when you use `git` and `gh` and need to submit a multiline commit message, first write the message in a file, and then use `git commit -F <filename>` or similar command to commit. And then remove the file. Include "[Cursor] " in the commit message and PR title.
+- ./venvにPython仮想環境があります。使用してください。
+- プログラム出力にデバッグに役立つ情報を含めてください。
+- 編集する前にファイルを読んでください。
+- Windsurfの制限により、`git`と`gh`を使用して複数行のコミットメッセージを送信する必要がある場合は、まずメッセージをファイルに書き込み、`git commit -F <ファイル名>`または同様のコマンドを使用してコミットします。その後、ファイルを削除します。コミットメッセージとPRタイトルに「[Windsurf] 」を含めてください。
 
-## Cursor learned
+## Windsurfが学んだ教訓
 
-- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
-- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
-- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
-- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities
+- 検索結果では、国際的なクエリに対して異なる文字エンコーディング（UTF-8）を適切に処理するようにしてください
+- デバッグ情報はstderrに追加し、パイプライン統合を改善するためにstdoutのメイン出力をクリーンに保ってください
+- matplotlibでseabornスタイルを使用する場合、seabornのバージョン変更により、スタイル名として'seaborn'ではなく'seaborn-v0_8'を使用してください
+- OpenAIのGPT-4ビジョン機能を使用する場合は、モデル名として'gpt-4o'を使用してください
 
-# Scratchpad
+# スクラッチパッド

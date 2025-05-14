@@ -1,46 +1,44 @@
-# Instructions
+# 指示
 
-During you interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `scratchpad.md` file so you will not make the same mistake again. 
+ユーザーとの対話中に、このプロジェクトで再利用可能な情報（例：ライブラリのバージョン、モデル名）、特にあなたが犯したミスや受けた修正に関する情報を見つけた場合は、`scratchpad.md`ファイルの`Lessons`セクションにメモを取り、同じミスを繰り返さないようにしましょう。
 
-You should also use the `scratchpad.md` file as a scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
-[X] Task 1
-[ ] Task 2
-Also update the progress of the task in the Scratchpad when you finish a subtask.
-Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the scratchpad to reflect and plan.
-The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
+また、`scratchpad.md`ファイルをスクラッチパッドとして使用して、考えを整理しましょう。特に新しいタスクを受け取った場合は、まずスクラッチパッドの内容を確認し、必要に応じて古い異なるタスクをクリアし、タスクを説明してから、タスクを完了するために必要な手順を計画します。進捗状況を示すためにTODOマーカーを使用できます。例：
+[X] タスク1
+[ ] タスク2
+サブタスクを完了したら、スクラッチパッドでタスクの進捗状況も更新してください。
+特にマイルストーンを完了した場合、スクラッチパッドを使用して振り返りと計画を行うことで、タスク達成の深さを向上させることができます。
+目標は、タスクの全体像と進捗状況を維持することです。次のステップを計画するときは、常にスクラッチパッドを参照してください。
 
-# Tools
+# ツール
 
-Note all the tools are in python. So in the case you need to do batch processing, you can always consult the python files and write your own script.
+すべてのツールはPythonで書かれています。バッチ処理が必要な場合は、Pythonファイルを参照して独自のスクリプトを作成することができます。
 
-## Screenshot Verification
+## スクリーンショット検証
 
-The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
+スクリーンショット検証ワークフローを使用すると、Webページのスクリーンショットを撮影し、LLMを使用してその外観を検証できます。以下のツールが利用可能です：
 
-1. Screenshot Capture:
+1. スクリーンショットキャプチャ：
 ```bash
 venv/bin/python tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
 ```
 
-2. LLM Verification with Images:
+2. 画像を使用したLLM検証：
 ```bash
-venv/bin/python tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
+venv/bin/python tools/llm_api.py --prompt "検証質問" --provider {openai|anthropic} --image path/to/screenshot.png
 ```
 
-Example workflow:
+使用例：
 ```python
 from screenshot_utils import take_screenshot_sync
 from llm_api import query_llm
 
-# Take a screenshot
-
+# スクリーンショットを撮影
 screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
 
-# Verify with LLM
-
+# LLMで検証
 response = query_llm(
-    "What is the background color and title of this webpage?",
-    provider="openai",  # or "anthropic"
+    "このWebページの背景色とタイトルは何ですか？",
+    provider="openai",  # または "anthropic"
     image_path=screenshot_path
 )
 print(response)
@@ -48,43 +46,43 @@ print(response)
 
 ## LLM
 
-You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
+タスクを支援するためのLLMが常に利用可能です。簡単なタスクの場合、以下のコマンドを実行してLLMを呼び出すことができます：
 ```
-venv/bin/python ./tools/llm_api.py --prompt "What is the capital of France?"
+venv/bin/python ./tools/llm_api.py --prompt "フランスの首都は何ですか？"
 ```
 
-But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
+ただし、通常は`tools/llm_api.py`ファイルの内容を確認し、必要に応じてそのAPIを使用してLLMを呼び出す方が良いでしょう。
 
-## Web browser
+## Webブラウザ
 
-You could use the `tools/web_scraper.py` file to scrape the web.
+`tools/web_scraper.py`ファイルを使用してWebをスクレイピングできます。
 ```
 venv/bin/python ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
 ```
-This will output the content of the web pages.
+これにより、Webページの内容が出力されます。
 
-## Search engine
+## 検索エンジン
 
-You could use the `tools/search_engine.py` file to search the web.
+`tools/search_engine.py`ファイルを使用してWebを検索できます。
 ```
-venv/bin/python ./tools/search_engine.py "your search keywords"
+venv/bin/python ./tools/search_engine.py "検索キーワード"
 ```
-This will output the search results in the following format:
+これにより、以下の形式で検索結果が出力されます：
 ```
 URL: https://example.com
-Title: This is the title of the search result
-Snippet: This is a snippet of the search result
+Title: 検索結果のタイトル
+Snippet: 検索結果のスニペット
 ```
 
-# Lessons
+# 教訓
 
-## User Specified Lessons
+## ユーザー指定の教訓
 
-- You have a python venv in ./venv.
-- Include info useful for debugging in the program output.
-- Read the file before you try to edit it.
-- Use LLM to perform flexible text understanding tasks. First test on a few files. After success, make it parallel.
+- ./venvにPython仮想環境があります。
+- プログラム出力にデバッグに役立つ情報を含めてください。
+- 編集する前にファイルを読んでください。
+- 柔軟なテキスト理解タスクにはLLMを使用してください。まず数個のファイルでテストし、成功したら並列処理を行ってください。
 
-## Windsurf learned
+## Windsurfが学んだ教訓
 
-Consult the `scratchpad.md` file for lessons.
+`scratchpad.md`ファイルで教訓を確認してください。
